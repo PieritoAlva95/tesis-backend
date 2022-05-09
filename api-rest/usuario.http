@@ -1,0 +1,68 @@
+####
+//http://localhost:3000/api/usuarios/
+//http://localhost:3000/api/usuarios?desde=10
+GET http://localhost:4000/api/usuarios
+
+
+
+###
+POST http://localhost:4000/api/usuarios
+Content-Type: application/json
+
+{
+	"nombres": "Jose",
+    "apellidos":"Alvarado",
+    "documentoDeIdentidad":"1104124431",
+    "numeroDeCelular": "0982703085",
+    "email":"pier@gmail.com",
+    "password":"12345"
+}
+# http://localhost:4000/api/upload/usuarios/60dcc5c2958f7d1a98b357ad
+###
+POST http://localhost:4000/api/login
+Content-Type: application/json
+
+{
+    "email":"ricardo@gmail.com",
+    "password":"123456789"
+}
+
+
+###
+PUT http://localhost:4000/api/usuarios/60db782d5d9a283b48a108bd
+Content-Type: application/json
+Authorization: x-token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MGRiNzgyZDVkOWEyODNiNDhhMTA4YmQiLCJpYXQiOjE2MjQ5OTY1NjgsImV4cCI6MTYyNTA4Mjk2OH0.Q4rs8VQKUpSkORSRNMsvfe7Jtfj3twRevzg03C1iG3k
+
+{
+	"nombres": "Samantha del Cisne",
+    "apellidos":"gonzalez Herrera",
+    "email":"samantha@gmail.com",
+}
+
+###
+//lista todas las ofertas
+GET http://localhost:4000/api/oferta/bloquear/usuario/6104a2b2501c8243940ff5cd
+
+###
+//lista todas las contratos
+GET http://localhost:4000/api/oferta/busqueda/contratos/usuario/6104a2b2501c8243940ff5cd
+
+# listar todas las ofertas creadas por un usuario
+###
+GET http://localhost:4000/api/oferta/usuario/60dcc5c2958f7d1a98b357ad
+
+###
+GET http://localhost:4000/api/oferta/usuario/categoria/Fontaneria/6104a2e2501c8243940ff5d0
+
+###
+GET http://localhost:4000/api/oferta/60dcb8a0df26ce2b7477d26b
+
+###
+GET http://localhost:4000/api/oferta/usuario/get-ofertas/60ec6703907adc272c743092
+
+###
+POST http://localhost:4000/api/usuarios/validar/token
+Content-Type: application/json
+
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTA0YTJiMjUwMWM4MjQzOTQwZmY1Y2QiLCJpYXQiOjE2Mjg2MjE5MjUsImV4cCI6MTYyODcwODMyNX0.YJGXXjqTH4ti5GCLVfi2F_WjTaYinuDVQ8AlkpX8Of0"}
