@@ -173,7 +173,11 @@ const getOfertasDiferentesUser = async (req, res) => {
     status: true,
     statusUser: true
   }).sort({ fechaCreacion: -1 });
-  res.json(listaOfertas);
+  res.res.json({
+    ok: true,
+    ofertas: listaOfertas
+  });
+  //json(listaOfertas);
 };
 
 const getBuscarOfertas = async (req, res) => {
