@@ -21,6 +21,7 @@ const {
   verOfertasAdmin,
   bloquearOfertasUser,
   getOfertasByUser,
+  getOfertasMovilUserLogueado,
 } = require('../controllers/oferta');
 
 const router = Router();
@@ -73,5 +74,6 @@ router.put(
 router.delete('/:id', validarJWT, borrarOferta);
 
 router.get('/usuario/get-ofertas/:id', getOfertasDiferentesUser);
+router.get('/usuario/ofertas/movil/:id/logueado', getOfertasMovilUserLogueado);
 
 module.exports = router;

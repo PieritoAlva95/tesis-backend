@@ -173,6 +173,16 @@ const getOfertasDiferentesUser = async (req, res) => {
     status: true,
     statusUser: true
   }).sort({ fechaCreacion: -1 });
+  res.json(listaOfertas);
+};
+
+const getOfertasMovilUserLogueado = async (req, res) => {
+  const listaOfertas = await Oferta.find({
+    usuario: { $ne: req.params.id },
+    disponible: 'sin contrato',
+    status: true,
+    statusUser: true
+  }).sort({ fechaCreacion: -1 });
   res.json({
     ok: true,
     ofertas: listaOfertas
@@ -416,6 +426,7 @@ module.exports = {
   borrarOferta,
   verOfertasByUser,
   getOfertasDiferentesUser,
+  getOfertasMovilUserLogueado,
   verOfertasContratadasByUser,
   getBuscarOfertas,
   getOfertasByCategoria,
