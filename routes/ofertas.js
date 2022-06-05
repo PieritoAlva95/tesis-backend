@@ -22,11 +22,20 @@ const {
   bloquearOfertasUser,
   getOfertasByUser,
   getOfertasMovilUserLogueado,
+  enviarUnaNotificacion,
+  actualizarFirebaseTokenUsuario,
 } = require('../controllers/oferta');
 
 const router = Router();
 
 router.get('/', verOfertas);
+
+//AGREGO LA RUTA PARA LAS NOTIFICACIONES
+router.get('/notificacion-usuario/:idOferta', enviarUnaNotificacion);
+//ACTUALIZAR TOKEN DEL USUARIO OBTENIDO DE FCM
+router.put('/actualizartoken-firebase/usuario/:id', validarJWT, actualizarFirebaseTokenUsuario);
+
+
 router.get('/admin/ofertas', verOfertasAdmin);
 
 router.post('/bloquear/user/:id', bloquearOfertasUser);

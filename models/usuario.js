@@ -37,7 +37,8 @@ const UsuarioSchema = Schema(
     ],
     esAdmin: { type: Boolean, default: false },
     fechaCreacion: { type: Date, default: Date.now() },
-    activo:{type:Boolean, default:true}
+    activo:{type:Boolean, default:true},
+    tokenfirebase: {type: String, unique: [true, 'El token debe ser único']},
   },
   {
     timestamps: false,

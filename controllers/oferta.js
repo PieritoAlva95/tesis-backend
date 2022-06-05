@@ -8,6 +8,82 @@ const Usuario = require('../models/usuario');
 require('dotenv').config();
 const API_KEY_MAILS = process.env.API_KEY_MAILS;
 
+
+const enviarUnaNotificacion = async(req, res, next) => {
+
+  let _id = req.params.idOferta;
+
+  const oferta = await ofertaModel.findById(_id);
+  console.log(oferta.nombre)
+
+  await usuarioModel
+  .find({}, "tokenfirebase")
+  .exec((err, usuarios) => {
+    
+    for (let i = 0; i < usuarios.length; i++) {
+      const element = usuarios[i].tokenfirebase;
+      if(element){
+        console.log('hola: '+element)
+        const data = {
+          //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
+          tokenId: element,
+          titulo: "Se ha publicado un oferta en LojaHouse",
+          mensaje: oferta.titulo + '\n' + oferta.cuerpo,
+        }
+        Notification.sendPushToOneUser(data);
+      
+      }
+    }
+    res.status(200).json({
+      ok: true,
+    });
+  })
+  };
+
+   //FUNCIÓN PARA ACTUALIZAR TOKEN DE FIREBASE-FLUTTER
+   const actualizarFirebaseTokenUsuario = async (req, res) => {
+    let id = req.params.id;
+    const { tokenfirebase } = req.body;
+
+    console.log("TOKENFCM: " + tokenfirebase);
+
+    usuarioModel.findById(id, (err, usuario) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          mensaje: "Error al buscar usuario",
+          errors: err,
+        });
+      }
+
+      if (!usuario) {
+        return res.status(400).json({
+          ok: false,
+          mensaje: "El usuario con el id: " + id + " no existe",
+          errors: { message: "No existe un usuario con ese ID" },
+        });
+      }
+      usuario.tokenfirebase = tokenfirebase;
+
+      usuario.save((err, usuarioGuardado) => {
+        if (err) {
+          return res.status(400).json({
+            ok: false,
+            mensaje: "Error al actualizar usuario",
+            errors: err,
+          });
+        }
+
+        res.status(200).json({
+          ok: true,
+          usuario: usuarioGuardado,
+        });
+      });
+    });
+  };
+
+
+
 const crearOferta = async (req, res = response) => {
   const uid = req.uid;
   const oferta = new Oferta({
@@ -435,5 +511,7 @@ module.exports = {
   verContratosUser,
   verOfertasAdmin,
   bloquearOfertasUser,
-  getOfertasByUser
+  getOfertasByUser,
+  enviarUnaNotificacion,
+  actualizarFirebaseTokenUsuario,
 };
