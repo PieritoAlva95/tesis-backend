@@ -153,6 +153,48 @@ const actualizarUsuario = async (req, res) => {
   }
 };
 
+   //FUNCIÓN PARA ACTUALIZAR TOKEN DE FIREBASE-FLUTTER
+   const actualizarFirebaseTokenUsuario = async (req, res) => {
+    let id = req.params.id;
+    const { tokenfirebase } = req.body;
+
+    console.log("TOKENFCM: " + tokenfirebase);
+
+    Usuario.findById(id, (err, usuario) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          mensaje: "Error al buscar usuario",
+          errors: err,
+        });
+      }
+
+      if (!usuario) {
+        return res.status(400).json({
+          ok: false,
+          mensaje: "El usuario con el id: " + id + " no existe",
+          errors: { message: "No existe un usuario con ese ID" },
+        });
+      }
+      usuario.tokenfirebase = tokenfirebase;
+
+      usuario.save((err, usuarioGuardado) => {
+        if (err) {
+          return res.status(400).json({
+            ok: false,
+            mensaje: "Error al actualizar usuario",
+            errors: err,
+          });
+        }
+
+        res.status(200).json({
+          ok: true,
+          usuario: usuarioGuardado,
+        });
+      });
+    });
+  };
+
 const borrarUsuario = async (req, res) => {
   const uid = req.params.id;
 
@@ -228,4 +270,5 @@ module.exports = {
   getUsuarios,
   getUsuariosAdmin,
   cambiarPassword,
+  actualizarFirebaseTokenUsuario,
 };
