@@ -1,6 +1,10 @@
 ### Node ###
 # Logs
 logs
+<<<<<<< HEAD
+=======
+*.log
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

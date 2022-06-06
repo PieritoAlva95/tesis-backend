@@ -8,6 +8,7 @@ const Usuario = require('../models/usuario');
 require('dotenv').config();
 const API_KEY_MAILS = process.env.API_KEY_MAILS;
 
+<<<<<<< HEAD
 
 const enviarUnaNotificacion = async(req, res, next) => {
 
@@ -44,6 +45,8 @@ const enviarUnaNotificacion = async(req, res, next) => {
 
 
 
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 const crearOferta = async (req, res = response) => {
   const uid = req.uid;
   const oferta = new Oferta({
@@ -101,7 +104,11 @@ const verOfertas = async (req, res) => {
     Oferta.find({
       disponible: 'sin contrato',
       status: true,
+<<<<<<< HEAD
       statusUser: true
+=======
+      statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
     }).sort({ fechaCreacion: -1 }),
 
     Oferta.countDocuments(),
@@ -117,7 +124,11 @@ const verOfertas = async (req, res) => {
 const verOfertasAdmin = async (req, res) => {
   const desde = Number(req.query.desde) || 0;
   const [ofertas, total] = await Promise.all([
+<<<<<<< HEAD
     Oferta.find({statusUser: true}).sort({ fechaCreacion: -1 }),
+=======
+    Oferta.find({ statusUser: true }).sort({ fechaCreacion: -1 }),
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 
     Oferta.countDocuments(),
   ]);
@@ -132,20 +143,31 @@ const verOfertasAdmin = async (req, res) => {
 const verOfertasByUser = async (req, res) => {
   const listaOfertas = await Oferta.find({
     usuario: req.params.id,
+<<<<<<< HEAD
     disponible: 'sin contrato', status: true, statusUser: true
+=======
+    disponible: 'sin contrato',
+    status: true,
+    statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   }).sort({ fechaCreacion: -1 });
   res.json(listaOfertas);
 };
 
 const getOfertasByUser = async (req, res) => {
   const listaOfertas = await Oferta.find({
+<<<<<<< HEAD
     usuario: req.params.id
+=======
+    usuario: req.params.id,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   });
   res.json(listaOfertas);
 };
 
 const bloquearOfertasUser = async (req, res) => {
   try {
+<<<<<<< HEAD
 
     const listaOfertas = await Oferta.find({
       usuario: req.params.id, statusUser: true
@@ -160,6 +182,21 @@ const bloquearOfertasUser = async (req, res) => {
       msg:"Usuario y ofertas bloqueado correctamente"
     });
 
+=======
+    const listaOfertas = await Oferta.find({
+      usuario: req.params.id,
+      statusUser: true,
+    });
+
+    listaOfertas.forEach((oferta) => {
+      desactivarOfertas(oferta);
+    });
+
+    res.status(200).json({
+      ok: true,
+      msg: 'Usuario y ofertas bloqueado correctamente',
+    });
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -167,6 +204,7 @@ const bloquearOfertasUser = async (req, res) => {
       msg: 'Error al Bloquear el usuario',
     });
   }
+<<<<<<< HEAD
 }
 
 const desactivarOfertas = async(oferta) => {
@@ -179,6 +217,24 @@ const desactivarOfertas = async(oferta) => {
 
 const verContratosUser = async (req, res) => {
   const listaOfertas = await Oferta.find({ disponible: 'con contrato', status: true, statusUser: true }).sort({
+=======
+};
+
+const desactivarOfertas = async (oferta) => {
+  console.log(oferta.statusUser);
+
+  const statusUser = { statusUser: false };
+
+  await Oferta.findByIdAndUpdate(oferta._id, { $set: statusUser });
+};
+
+const verContratosUser = async (req, res) => {
+  const listaOfertas = await Oferta.find({
+    disponible: 'con contrato',
+    status: true,
+    statusUser: true,
+  }).sort({
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
     fechaCreacion: -1,
   });
   let lista = [];
@@ -197,7 +253,11 @@ const verOfertasContratadasByUser = async (req, res) => {
     usuario: req.params.id,
     disponible: 'con contrato',
     status: true,
+<<<<<<< HEAD
     statusUser: true
+=======
+    statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   }).sort({ fechaCreacion: -1 });
   res.json(listaOfertas);
 };
@@ -207,11 +267,16 @@ const getOfertasDiferentesUser = async (req, res) => {
     usuario: { $ne: req.params.id },
     disponible: 'sin contrato',
     status: true,
+<<<<<<< HEAD
     statusUser: true
+=======
+    statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   }).sort({ fechaCreacion: -1 });
   res.json(listaOfertas);
 };
 
+<<<<<<< HEAD
 const getOfertasMovilUserLogueado = async (req, res) => {
   const listaOfertas = await Oferta.find({
     usuario: { $ne: req.params.id },
@@ -226,6 +291,8 @@ const getOfertasMovilUserLogueado = async (req, res) => {
   //json(listaOfertas);
 };
 
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 const getBuscarOfertas = async (req, res) => {
   try {
     if (req.params.text == '') {
@@ -238,7 +305,11 @@ const getBuscarOfertas = async (req, res) => {
         titulo: new RegExp(req.params.text),
         disponible: 'sin contrato',
         status: true,
+<<<<<<< HEAD
         statusUser: true
+=======
+        statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
       }).sort({ fechaCreacion: -1 });
       res.json({
         ok: true,
@@ -265,8 +336,14 @@ const getBuscarOfertasUser = async (req, res) => {
       const busqueda = await Oferta.find({
         titulo: new RegExp(req.params.text),
         usuario: { $ne: req.params.id },
+<<<<<<< HEAD
         disponible: 'sin contrato', status: true,
         statusUser: true
+=======
+        disponible: 'sin contrato',
+        status: true,
+        statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
       }).sort({ fechaCreacion: -1 });
       res.json({
         ok: true,
@@ -292,8 +369,14 @@ const getOfertasByCategoria = async (req, res) => {
     } else {
       const busqueda = await Oferta.find({
         categoria: new RegExp(req.params.text),
+<<<<<<< HEAD
         disponible: 'sin contrato', status: true,
         statusUser: true
+=======
+        disponible: 'sin contrato',
+        status: true,
+        statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
       }).sort({ fechaCreacion: -1 });
       res.json({
         ok: true,
@@ -320,8 +403,14 @@ const getOfertasByCategoriaUser = async (req, res) => {
       const busqueda = await Oferta.find({
         categoria: new RegExp(req.params.text),
         usuario: { $ne: req.params.id },
+<<<<<<< HEAD
         disponible: 'sin contrato', status: true,
         statusUser: true
+=======
+        disponible: 'sin contrato',
+        status: true,
+        statusUser: true,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
       }).sort({ fechaCreacion: -1 });
       res.json({
         ok: true,
@@ -351,7 +440,11 @@ const actualizarOferta = async (req, res = response) => {
     }
 
     const cambioOferta = {
+<<<<<<< HEAD
       ...req.body
+=======
+      ...req.body,
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
     };
 
     if (cambioOferta.interesados.aceptado === true) {
@@ -462,7 +555,10 @@ module.exports = {
   borrarOferta,
   verOfertasByUser,
   getOfertasDiferentesUser,
+<<<<<<< HEAD
   getOfertasMovilUserLogueado,
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   verOfertasContratadasByUser,
   getBuscarOfertas,
   getOfertasByCategoria,
@@ -472,6 +568,9 @@ module.exports = {
   verOfertasAdmin,
   bloquearOfertasUser,
   getOfertasByUser,
+<<<<<<< HEAD
   enviarUnaNotificacion,
 
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 };

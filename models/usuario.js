@@ -10,7 +10,11 @@ const UsuarioSchema = Schema(
     password: { type: String, require: true },
     img: { type: String, default: 'no-img.jpg' },
     skills: [{ type: String, require: false, default: '' }],
+<<<<<<< HEAD
     bio: { type: String, require:'' },
+=======
+    bio: { type: String, require: '' },
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
     redesSociales: {
       twitter: { type: String, default: '' },
       facebook: { type: String, default: '' },
@@ -37,8 +41,12 @@ const UsuarioSchema = Schema(
     ],
     esAdmin: { type: Boolean, default: false },
     fechaCreacion: { type: Date, default: Date.now() },
+<<<<<<< HEAD
     activo:{type:Boolean, default:true},
     tokenfirebase: {type: String, unique: [true, 'El token debe ser único']},
+=======
+    activo: { type: Boolean, default: true },
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   },
   {
     timestamps: false,

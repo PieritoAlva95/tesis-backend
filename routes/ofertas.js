@@ -21,20 +21,26 @@ const {
   verOfertasAdmin,
   bloquearOfertasUser,
   getOfertasByUser,
+<<<<<<< HEAD
   getOfertasMovilUserLogueado,
   enviarUnaNotificacion,
 
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 } = require('../controllers/oferta');
 
 const router = Router();
 
 router.get('/', verOfertas);
+<<<<<<< HEAD
 
 //AGREGO LA RUTA PARA LAS NOTIFICACIONES
 router.get('/notificacion-usuario/:idOferta', enviarUnaNotificacion);
 
 
 
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 router.get('/admin/ofertas', verOfertasAdmin);
 
 router.post('/bloquear/user/:id', bloquearOfertasUser);
@@ -82,6 +88,9 @@ router.put(
 router.delete('/:id', validarJWT, borrarOferta);
 
 router.get('/usuario/get-ofertas/:id', getOfertasDiferentesUser);
+<<<<<<< HEAD
 router.get('/usuario/ofertas/movil/:id/logueado', getOfertasMovilUserLogueado);
+=======
+>>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 
 module.exports = router;
