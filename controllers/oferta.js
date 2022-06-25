@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 
 const Oferta = require('../models/oferta');
 const Usuario = require('../models/usuario');
+const Notification = require('../helpers/notifications');
 
 require('dotenv').config();
 const API_KEY_MAILS = process.env.API_KEY_MAILS;
