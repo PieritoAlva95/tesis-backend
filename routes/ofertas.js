@@ -31,7 +31,7 @@ const router = Router();
 router.get('/', verOfertas);
 
 //AGREGO LA RUTA PARA LAS NOTIFICACIONES
-router.get('/notificacion-usuario/:idOferta', enviarUnaNotificacion);
+router.get('/notificacion-usuario/:idOferta/pushed', enviarUnaNotificacion);
 
 
 
