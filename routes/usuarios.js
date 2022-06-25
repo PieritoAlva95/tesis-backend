@@ -14,10 +14,7 @@ const {
   getUsuarios,
   getUsuariosAdmin,
   cambiarPassword,
-<<<<<<< HEAD
   actualizarFirebaseTokenUsuario,
-=======
->>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 } = require('../controllers/usuario');
 
 router.get('/', getUsuario);
@@ -41,15 +38,10 @@ router.post(
 );
 
 router.put('/:id', [validarJWT, validarCampos], actualizarUsuario);
-<<<<<<< HEAD
 //ACTUALIZAR TOKEN DEL USUARIO OBTENIDO DE FCM
 router.put('/actualizartoken-firebase/usuario/:id', validarJWT, actualizarFirebaseTokenUsuario);
 
 router.put('/cambio/:id',[validarJWT], cambiarPassword);
-=======
-
-router.put('/cambio/:id', [validarJWT], cambiarPassword);
->>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 
 router.delete('/:id', validarJWT, borrarUsuario);
 

@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 const {response} = require('express');
-=======
-const { response } = require('express');
->>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
 const Usuario = require('../models/usuario');
 const bcryptjs = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 
-<<<<<<< HEAD
 
 const login = async(req, res = response) =>{
 
@@ -70,61 +65,3 @@ module.exports = {
     login,
     renewToken
 }
-=======
-const login = async (req, res = response) => {
-  const { email, password } = req.body;
-
-  try {
-    const usuarioDB = await Usuario.findOne({ email, activo: true });
-
-    if (!usuarioDB) {
-      return res.status(404).json({
-        ok: false,
-        msg: 'Error, el usuario no existe o esta bloqueado',
-      });
-    }
-
-    //verificar contraseña
-    const validPassword = bcryptjs.compareSync(password, usuarioDB.password);
-
-    if (!validPassword) {
-      return res.status(404).json({
-        ok: false,
-        msg: 'El usuario o la contraseña son incorrectos.',
-      });
-    }
-
-    //generar token
-
-    const token = await generarJWT(usuarioDB.id);
-
-    res.json({
-      ok: true,
-      token,
-      usuarioDB,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      ok: false,
-      msg: 'error cconsulte con el administrador',
-    });
-  }
-};
-
-const renewToken = async (req, res = response) => {
-  const uid = req.uid;
-  // Generar el TOKEN - JWT
-  const token = await generarJWT(uid);
-
-  res.json({
-    ok: true,
-    token,
-  });
-};
-
-module.exports = {
-  login,
-  renewToken,
-};
->>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e

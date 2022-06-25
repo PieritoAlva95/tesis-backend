@@ -21,11 +21,7 @@ const OfertaSchema = Schema(
     ],
     disponible: { type: String, default: 'sin contrato' },
     status: { type: Boolean, default: true },
-<<<<<<< HEAD
     statusUser: { type: Boolean, default: true }
-=======
-    statusUser: { type: Boolean, default: true },
->>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
   },
   {
     timestamps: false,

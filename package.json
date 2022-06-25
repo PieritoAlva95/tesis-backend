@@ -20,11 +20,8 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-validator": "^6.12.0",
-<<<<<<< HEAD
     "firebase": "^9.8.2",
     "firebase-admin": "^10.2.0",
-=======
->>>>>>> 13058902fe5fde991086b562dd679fde823b1b4e
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.0",
