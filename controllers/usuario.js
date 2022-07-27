@@ -30,7 +30,7 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
       //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
       tokenId: element,
       titulo: "¡Felicidades!",
-      mensaje: 'Ha sido contratado '+tituloOferta+' en el trabajo que postuló por medio de Trabajos 24/7',
+      mensaje: 'Ha sido contratado en el trabajo '+tituloOferta+' que postuló por medio de Trabajos 24/7',
     }
     Notification.sendPushToOneUser(data);
 
