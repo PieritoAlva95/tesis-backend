@@ -15,7 +15,12 @@ const {
   getUsuariosAdmin,
   cambiarPassword,
   actualizarFirebaseTokenUsuario,
+  enviarUnaNotificacionContratar
 } = require('../controllers/usuario');
+
+
+router.get('/notificacion-contratar/:idUsuario/pushed', enviarUnaNotificacionContratar);
+
 
 router.get('/', getUsuario);
 

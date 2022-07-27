@@ -1,8 +1,47 @@
 const { response } = require('express');
 const Usuario = require('../models/usuario');
-
+const Notification = require('../helpers/notifications');
 const bcryptjs = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
+
+
+const enviarUnaNotificacionContratar = async(req, res, next) => {
+
+  let _id = req.params.idUsuario;
+
+
+  await Usuario
+  .findById({_id}, "tokenfirebase")
+  .exec((err, usuarios) => {
+    const element = usuarios.tokenfirebase;
+    const data = {
+      //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
+      tokenId: element,
+      titulo: "¡Felicidades!",
+      mensaje: 'Ha sido contratado en el trabajo que postuló en Trabajos 24/7',
+    }
+    Notification.sendPushToOneUser(data);
+
+    /*for (let i = 0; i < usuarios.length; i++) {
+      const element = usuarios[i].tokenfirebase;
+      if(element){
+        console.log('hola: '+element)
+        const data = {
+          //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
+          tokenId: element,
+          titulo: "Se ha publicado un oferta en Trabajos 24/7",
+          mensaje: oferta.titulo + '\n' + oferta.cuerpo,
+        }
+        Notification.sendPushToOneUser(data);
+      
+      }
+    }*/
+    res.status(200).json({
+      ok: true,
+    });
+  })
+  };
+
 
 const getUsuario = async (req, res) => {
   const desde = Number(req.query.desde) || 0;
@@ -271,4 +310,5 @@ module.exports = {
   getUsuariosAdmin,
   cambiarPassword,
   actualizarFirebaseTokenUsuario,
+  enviarUnaNotificacionContratar,
 };
