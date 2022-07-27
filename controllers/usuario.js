@@ -11,7 +11,7 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
 
 
   await Usuario
-  .find({}, "tokenfirebase")
+  .find({})
   .exec((err, usuarios) => {
 
     if (err) {
@@ -24,6 +24,7 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
 
 
     const element = usuarios.tokenfirebase;
+    console.log('ELEMENT: '+element);
     const data = {
       //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
       tokenId: element,
