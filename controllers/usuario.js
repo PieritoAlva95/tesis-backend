@@ -13,6 +13,16 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
   await Usuario
   .find({}, "tokenfirebase")
   .exec((err, usuarios) => {
+
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        mensaje: "Error cargando usuario",
+        errors: err,
+      });
+    }
+
+
     const element = usuarios.tokenfirebase;
     const data = {
       //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
