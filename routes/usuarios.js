@@ -19,7 +19,7 @@ const {
 } = require('../controllers/usuario');
 
 
-router.get('/notificacion-contratar/:idUsuario/pushed', enviarUnaNotificacionContratar);
+router.get('/notificacion-contratar/:idUsuario/pushed/:tituloOferta', enviarUnaNotificacionContratar);
 
 
 router.get('/', getUsuario);
