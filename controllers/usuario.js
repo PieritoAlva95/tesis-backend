@@ -11,7 +11,7 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
 
 
   await Usuario
-  .findById({_id}, "tokenfirebase")
+  .find({}, "tokenfirebase")
   .exec((err, usuarios) => {
     const element = usuarios.tokenfirebase;
     const data = {
