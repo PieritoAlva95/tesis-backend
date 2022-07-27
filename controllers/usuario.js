@@ -9,6 +9,8 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
 
   let _id = req.params.idUsuario;
   let tituloOferta = req.params.tituloOferta;
+  let tipoNotificacion = req.params.tipoNotificacion;
+  let mensaje = '';
 
 
   await Usuario
@@ -23,14 +25,22 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
       });
     }
 
+    if(tipoNotificacion == 'contrato'){
+       mensaje = 'Ha sido contratado en el trabajo '+tituloOferta+' que postuló por medio de Trabajos 24/7';
+    }else{
+       mensaje = 'Ha finalizado el contratado: '+tituloOferta+' que postuló por medio de Trabajos 24/7';
+    }
+
+    
+
 
     const element = usuarios.tokenfirebase;
     console.log('ELEMENT: '+element);
     const data = {
       //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
       tokenId: element,
-      titulo: "Trabajo 24/7 le informa lo siguiente",
-      mensaje: tituloOferta,
+      titulo: "Trabajos 24/7 le informa",
+      mensaje: mensaje,
     }
     Notification.sendPushToOneUser(data);
 
