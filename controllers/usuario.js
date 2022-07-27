@@ -25,10 +25,10 @@ const enviarUnaNotificacionContratar = async(req, res, next) => {
       });
     }
 
-    if(tipoNotificacion == 'contrato'){
-       mensaje = 'Ha sido contratado en el trabajo '+tituloOferta+' que postuló por medio de Trabajos 24/7';
-    }else{
-       mensaje = 'Ha finalizado el contratado: '+tituloOferta+' que postuló por medio de Trabajos 24/7';
+    if(tipoNotificacion.includes('contrato')){
+       mensaje = 'Ha sido contratado en el trabajo '+tituloOferta+' que postuló por medio de la aplicación Trabajos 24/7';
+    }if(tipoNotificacion.includes('fincontrato')){
+       mensaje = 'Ha finalizado el contratado: '+tituloOferta+' que postuló por medio de la aplicación Trabajos 24/7';
     }
 
     
