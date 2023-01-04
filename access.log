@@ -3,3 +3,7 @@
 ::ffff:192.168.1.57 - - [25/May/2022:15:22:45 +0000] "GET /api/usuarios/628860ab4d763f0004224f26 HTTP/1.1" 200 866 "-" "Dart/2.16 (dart:io)"
 ::ffff:192.168.1.57 - - [25/May/2022:15:22:54 +0000] "GET /api/usuarios/628860ab4d763f0004224f26 HTTP/1.1" 200 866 "-" "Dart/2.16 (dart:io)"
 ::ffff:192.168.1.57 - - [25/May/2022:15:25:06 +0000] "GET /api/usuarios/628860ab4d763f0004224f26 HTTP/1.1" 200 866 "-" "Dart/2.16 (dart:io)"
+::ffff:127.0.0.1 - - [04/Jan/2023:22:22:32 +0000] "GET / HTTP/1.1" 404 139 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [04/Jan/2023:22:22:43 +0000] "GET /api/oferta HTTP/1.1" 200 - "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [04/Jan/2023:22:24:33 +0000] "POST /api/resetear-password HTTP/1.1" 404 161 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [04/Jan/2023:22:24:50 +0000] "PUT /api/resetear-password HTTP/1.1" 200 107 "-" "Thunder Client (https://www.thunderclient.com)"

@@ -363,17 +363,25 @@ const actualizarOferta = async (req, res = response) => {
         const emailUsuarioContratado = usuarioContratado.email;
         const emailUsuarioQueContrata = usuarioQueContrata.email;
         const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
-        const transporter = nodemailer.createTransport(
-          sendgridTransport({
-            auth: {
-              api_key: API_KEY_MAILS,
-            },
-          })
-        );
+        const config = {
+          host: 'smtp.gmail.com',
+          port: 587,
+          auth: {
+            user: 'workjobstesis@gmail.com',
+            pass: 'mslvplvwdeyxtyvq'
+          }
+        }
+        // const transporter = nodemailer.createTransport(
+        //   sendgridTransport({
+        //     auth: {
+        //       api_key: API_KEY_MAILS,
+        //     },
+        //   })
+        // );
 
         let mailOptions = {
           to: emailUsuarioContratado,
-          from: 'jpalvaradoc@unl.edu.ec',
+          from: 'workjobstesis@gmail.com',
           subject: 'Notificación de contrato Jobs - Trabajos 24/7',
           html: `
               <table border="0" cellpadding="0" cellspacing="0" width="600px" background-color="#2d3436" bgcolor="#2d3436">
@@ -389,19 +397,14 @@ const actualizarOferta = async (req, res = response) => {
                       <span style:"color: #fff"><b>Gracias por confiar en nosotros!</b></span><br>
                     </p>
                   </td>
-                </tr>
-            
-                <tr bgcolor="#fafafa">
-                  <td style="text-align:center">
-                    <p><a href="#">Inicia Sesión en Trabajos 24/7</a></p>
-                  </td>
-                </tr>
-            
+                </tr>            
               </table>
               `,
         };
 
-        transporter.sendMail(mailOptions, (err) => {
+        const transport = nodemailer.createTransport(config);
+
+        transport.sendMail(mailOptions, (err) => {
           if (err) {
             return res.status(404).json({
               ok: false,

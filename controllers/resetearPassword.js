@@ -26,24 +26,32 @@ const resetearPassword = async (req, res) => {
     await Usuario.findOneAndUpdate(
       { _id: usuarioDB.id },
       { password: passwordEncriptada },
-      (error) => {
+      async (error) => {
         if (error) {
           return res.status(404).json({
             ok: false,
             msg: 'Ha ocurrido un error en el cambio de contraseña.',
           });
         } else {
-          const transporter = nodemailer.createTransport(
-            sendgridTransport({
-              auth: {
-                api_key: API_KEY_MAILS,
-              },
-            })
-          );
+          const config = {
+            host: 'smtp.gmail.com',
+            port: 587,
+            auth: {
+              user: 'workjobstesis@gmail.com',
+              pass: 'mslvplvwdeyxtyvq'
+            }
+          }
+          // const transporter = nodemailer.createTransport(
+          //   sendgridTransport({
+          //     auth: {
+          //       api_key: API_KEY_MAILS,
+          //     },
+          //   })
+          // );
 
           let mailOptions = {
             to: userEmail,
-            from: 'jpalvaradoc@unl.edu.ec',
+            from: 'workjobstesis@gmail.com',
             subject: 'Cambio de contraseña Jobs - Trabajos 24/7',
             html: `
               <table border="0" cellpadding="0" cellspacing="0" width="600px" background-color="#2d3436" bgcolor="#2d3436">
@@ -56,19 +64,14 @@ const resetearPassword = async (req, res) => {
                       <span style:"color: #fff"><b>NO TE OLVIDES DE ACTUALIZAR TU CONTRASEÑA CUANDO VUELVAS A INGRESAR A LA PLATAFORMA</b></span><br>
                     </p>
                   </td>
-                </tr>
-            
-                <tr bgcolor="#fafafa">
-                  <td style="text-align:center">
-                    <p><a href="#">Inicia Sesión en Trabajos 24/7</a></p>
-                  </td>
-                </tr>
-            
+                </tr>            
               </table>
               `,
           };
 
-          transporter.sendMail(mailOptions, (err) => {
+          const transport = nodemailer.createTransport(config);
+
+          transport.sendMail(mailOptions, (err) => {
             if (err) {
               return res.status(404).json({
                 ok: false,
