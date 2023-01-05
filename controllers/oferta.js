@@ -10,7 +10,7 @@ require('dotenv').config();
 const API_KEY_MAILS = process.env.API_KEY_MAILS;
 
 
-const enviarUnaNotificacion = async(req, res, next) => {
+const enviarUnaNotificacion = async (req, res, next) => {
 
   let _id = req.params.idOferta;
 
@@ -18,28 +18,28 @@ const enviarUnaNotificacion = async(req, res, next) => {
   console.log(oferta.nombre)
 
   await Usuario
-  .find({}, "tokenfirebase")
-  .exec((err, usuarios) => {
-    
-    for (let i = 0; i < usuarios.length; i++) {
-      const element = usuarios[i].tokenfirebase;
-      if(element){
-        console.log('hola: '+element)
-        const data = {
-          //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
-          tokenId: element,
-          titulo: "Se ha publicado un oferta en Trabajos 24/7",
-          mensaje: oferta.titulo + '\n' + oferta.cuerpo,
+    .find({}, "tokenfirebase")
+    .exec((err, usuarios) => {
+
+      for (let i = 0; i < usuarios.length; i++) {
+        const element = usuarios[i].tokenfirebase;
+        if (element) {
+          console.log('hola: ' + element)
+          const data = {
+            //tokenId: "fZPNNYfBRCeVsHLQPom5e-:APA91bGK8lfvpVxJdoZcu3_3Un0iemfOv1exTFzA4bfkRBTkJd69IzdiK6P0YmZOmtPATqnYG4s2JrihUkK_yz9QPl7X2rDHO1mQik2zrsNsDC67_fdzV4c47HgelLnBOqvg7VT-Gb_Q",
+            tokenId: element,
+            titulo: "Se ha publicado un oferta en Trabajos 24/7",
+            mensaje: oferta.titulo + '\n' + oferta.cuerpo,
+          }
+          Notification.sendPushToOneUser(data);
+
         }
-        Notification.sendPushToOneUser(data);
-      
       }
-    }
-    res.status(200).json({
-      ok: true,
-    });
-  })
-  };
+      res.status(200).json({
+        ok: true,
+      });
+    })
+};
 
 
 
@@ -118,7 +118,7 @@ const verOfertas = async (req, res) => {
 const verOfertasAdmin = async (req, res) => {
   const desde = Number(req.query.desde) || 0;
   const [ofertas, total] = await Promise.all([
-    Oferta.find({statusUser: true}).sort({ fechaCreacion: -1 }),
+    Oferta.find({ statusUser: true }).sort({ fechaCreacion: -1 }),
 
     Oferta.countDocuments(),
   ]);
@@ -153,12 +153,12 @@ const bloquearOfertasUser = async (req, res) => {
     });
 
     listaOfertas.forEach(oferta => {
-    desactivarOfertas(oferta);
+      desactivarOfertas(oferta);
     });
 
     res.status(200).json({
-      ok:true,
-      msg:"Usuario y ofertas bloqueado correctamente"
+      ok: true,
+      msg: "Usuario y ofertas bloqueado correctamente"
     });
 
   } catch (error) {
@@ -170,12 +170,12 @@ const bloquearOfertasUser = async (req, res) => {
   }
 }
 
-const desactivarOfertas = async(oferta) => {
+const desactivarOfertas = async (oferta) => {
   console.log(oferta.statusUser);
-  
-    const statusUser = {statusUser: false };
 
-    await Oferta.findByIdAndUpdate(oferta._id, {$set: statusUser});
+  const statusUser = { statusUser: false };
+
+  await Oferta.findByIdAndUpdate(oferta._id, { $set: statusUser });
 }
 
 const verContratosUser = async (req, res) => {
@@ -340,7 +340,8 @@ const getOfertasByCategoriaUser = async (req, res) => {
 
 const actualizarOferta = async (req, res = response) => {
   const id = req.params.id;
-  const uid = req.uid;
+  const uid = req.body.usuario;
+
   try {
     const ofertaDB = await Oferta.findById(id);
 
@@ -352,7 +353,8 @@ const actualizarOferta = async (req, res = response) => {
     }
 
     const cambioOferta = {
-      ...req.body
+      ...req.body,
+      usuario: uid,
     };
 
     if (cambioOferta.interesados.aceptado === true) {
