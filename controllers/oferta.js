@@ -344,6 +344,7 @@ const actualizarOferta = async (req, res = response) => {
 
   try {
     const ofertaDB = await Oferta.findById(id);
+    console.log(`ofertaDB: ${ofertaDB}`)
 
     if (!ofertaDB) {
       return res.status(404).json({
@@ -356,6 +357,8 @@ const actualizarOferta = async (req, res = response) => {
       ...req.body,
       usuario: uid,
     };
+
+    console.log(`CAMBIO_OFERTA: ${cambioOferta}`)
 
     const ofertaActualizado = await Oferta.findByIdAndUpdate(id, cambioOferta, {
       new: true,
@@ -410,7 +413,7 @@ const actualizarOferta = async (req, res = response) => {
 
             transport.sendMail(mailOptions, (err) => {
               if (err) {
-                return res.status(404).json({
+                res.status(404).json({
                   ok: false,
                   msg: `Ha ocurrido un problema en el envio del correo. Error: ${err}`,
                 });
@@ -420,7 +423,7 @@ const actualizarOferta = async (req, res = response) => {
         }
       }
     });
-
+    console.log(`ofertaActualizado: ${ofertaActualizado}`)
     res.json({
       ok: true,
       oferta: ofertaActualizado,

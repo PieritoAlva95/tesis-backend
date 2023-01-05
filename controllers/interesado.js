@@ -3,7 +3,6 @@ const Oferta = require('../models/oferta');
 
 //ingresar postulaciones
 const actualizarOferta = async (req, res = response) => {
-  console.log(`SI ENTRE A actualizarOferta`)
   const id = req.params.id;
   const uid = req.body.usuario;
 
@@ -17,7 +16,6 @@ const actualizarOferta = async (req, res = response) => {
       }
     }
     const ofertaDB = await Oferta.findById(id);
-    console.log(`OFERTA_DB: ${ofertaDB.body}`)
 
     if (!ofertaDB) {
       return res.status(404).json({
@@ -30,8 +28,6 @@ const actualizarOferta = async (req, res = response) => {
       ...req.body,
       usuario: uid,
     };
-
-    console.log(`CAMBIO_OFERTA: ${cambioOferta.body}`)
 
     if (cambioOferta.interesados.aceptado === true) {
       const idUsuarioContratado = cambioOferta.interesados.postulante;
@@ -69,7 +65,6 @@ const actualizarOferta = async (req, res = response) => {
 
         transport.sendMail(mailOptions, (err) => {
           if (err) {
-            console.log(`ERROR_MAIL: ${err}`)
             return res.status(404).json({
               ok: false,
               msg: `Ha ocurrido un problema en el envio del correo. Error: ${err}`,
