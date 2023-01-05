@@ -371,6 +371,7 @@ const actualizarOferta = async (req, res = response) => {
 
     const resultado = ofertaActualizado.interesados.filter(interesado => interesado.aceptado === true)
     console.log(`RESULTADO: ${resultado}`)
+    console.log(`POSTULANTE: ${resultado['postulante']}`)
 
     const idUsuarioContratado = resultado.postulante;
     console.log(`idUsuarioContratado: ${idUsuarioContratado}`)
