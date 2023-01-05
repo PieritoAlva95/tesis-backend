@@ -356,7 +356,7 @@ const actualizarOferta = async (req, res = response) => {
       ...req.body,
     };
 
-    console.log(`CAMBIO_OFERTA: ${cambioOferta.toISOString()}`)
+    console.log(`CAMBIO_OFERTA: ${cambioOferta}`)
 
     const ofertaActualizado = await Oferta.findByIdAndUpdate(id, cambioOferta, {
       new: true,
