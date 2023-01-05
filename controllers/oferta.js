@@ -369,22 +369,17 @@ const actualizarOferta = async (req, res = response) => {
       }
     });
 
-    const usuarioContratado = await Usuario.findById(ofertaActualizado.interesados.postulante);
-    console.log(`usuarioContratado: ${usuarioContratado}`)
+    const resultado = ofertaActualizado.interesados.filter(interesado => interesado.aceptado === true)
+    console.log(`RESULTADO: ${resultado}`)
 
 
     if (ofertaActualizado.interesados.aceptado === true) {
-      console.log(`Llegue al if de ofertaActualizado`)
       const idUsuarioContratado = ofertaActualizado.interesados.postulante;
-      console.log(`idUsuarioContratado: ${idUsuarioContratado}`)
       const usuarioContratado = await Usuario.findById(idUsuarioContratado);
-      console.log(`usuarioContratado: ${usuarioContratado}`)
       const usuarioQueContrata = await Usuario.findById(ofertaActualizado.usuario);
       if (usuarioContratado && usuarioQueContrata) {
         const emailUsuarioContratado = usuarioContratado.email;
-        console.log(`emailUsuarioContratado: ${emailUsuarioContratado}`)
         const emailUsuarioQueContrata = usuarioQueContrata.email;
-        console.log(`emailUsuarioQueContrata: ${emailUsuarioQueContrata}`)
         const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
         const config = {
           host: 'smtp.gmail.com',
