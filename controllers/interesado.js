@@ -3,6 +3,7 @@ const Oferta = require('../models/oferta');
 
 //ingresar postulaciones
 const actualizarOferta = async (req, res = response) => {
+  console.log(`SI ENTRE A actualizarOferta`)
   const id = req.params.id;
   const uid = req.body.usuario;
   try {
@@ -19,6 +20,8 @@ const actualizarOferta = async (req, res = response) => {
       ...req.body,
       usuario: uid,
     };
+
+    console.log(`CAMBIO_OFERTA: ${cambioOferta}`)
 
     if (cambioOferta.interesados.aceptado === true) {
       const idUsuarioContratado = cambioOferta.interesados.postulante;
