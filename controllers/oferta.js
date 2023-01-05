@@ -356,6 +356,8 @@ const actualizarOferta = async (req, res = response) => {
       ...req.body,
     };
 
+    console.log(`CAMBIO_OFERTA: ${JSON.stringify(cambioOferta)}`)
+
     const ofertaActualizado = await Oferta.findByIdAndUpdate(id, cambioOferta, {
       new: true,
     }, async (error) => {
