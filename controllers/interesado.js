@@ -6,8 +6,18 @@ const actualizarOferta = async (req, res = response) => {
   console.log(`SI ENTRE A actualizarOferta`)
   const id = req.params.id;
   const uid = req.body.usuario;
+
   try {
+    const config = {
+      host: 'smtp.gmail.com',
+      port: 587,
+      auth: {
+        user: 'workjobstesis@gmail.com',
+        pass: 'mslvplvwdeyxtyvq'
+      }
+    }
     const ofertaDB = await Oferta.findById(id);
+    console.log(`OFERTA_DB: ${ofertaDB.body}`)
 
     if (!ofertaDB) {
       return res.status(404).json({
@@ -31,14 +41,6 @@ const actualizarOferta = async (req, res = response) => {
         const emailUsuarioContratado = usuarioContratado.email;
         const emailUsuarioQueContrata = usuarioQueContrata.email;
         const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
-        const config = {
-          host: 'smtp.gmail.com',
-          port: 587,
-          auth: {
-            user: 'workjobstesis@gmail.com',
-            pass: 'mslvplvwdeyxtyvq'
-          }
-        }
 
         let mailOptions = {
           to: emailUsuarioContratado,
