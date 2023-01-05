@@ -369,7 +369,10 @@ const actualizarOferta = async (req, res = response) => {
       }
     });
 
+    console.log(`perimer_ofertaActualizado: ${ofertaActualizado}`)
+
     if (ofertaActualizado.interesados.aceptado === true) {
+      console.log(`Llegue al if de ofertaActualizado`)
       const idUsuarioContratado = ofertaActualizado.interesados.postulante;
       console.log(`idUsuarioContratado: ${idUsuarioContratado}`)
       const usuarioContratado = await Usuario.findById(idUsuarioContratado);
@@ -425,6 +428,7 @@ const actualizarOferta = async (req, res = response) => {
         });
       }
     }
+
     console.log(`ofertaActualizado: ${ofertaActualizado}`)
     res.json({
       ok: true,
