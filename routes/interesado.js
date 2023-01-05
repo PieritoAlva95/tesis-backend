@@ -5,7 +5,7 @@ const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
 
-const { actualizarOferta } = require('../controllers/oferta');
+const { actualizarOferta } = require('../controllers/interesado');
 
 
 const router = Router();
