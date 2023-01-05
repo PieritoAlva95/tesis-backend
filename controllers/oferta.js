@@ -356,6 +356,9 @@ const actualizarOferta = async (req, res = response) => {
       ...req.body,
     };
 
+    console.log(`CONDICIONAL: ${cambioOferta.interesados.aceptado}`)
+    console.log(`CONDICIONAL: ${cambioOferta.interesados}`)
+
     const ofertaActualizado = await Oferta.findByIdAndUpdate(id, cambioOferta, {
       new: true,
     }, async (error) => {
@@ -366,9 +369,6 @@ const actualizarOferta = async (req, res = response) => {
         })
       }
     });
-
-    console.log(`CONDICIONAL: ${ofertaActualizado.interesados.aceptado}`)
-    console.log(`perimer_ofertaActualizado: ${ofertaActualizado}`)
 
     if (ofertaActualizado.interesados.aceptado === true) {
       console.log(`Llegue al if de ofertaActualizado`)
