@@ -340,7 +340,6 @@ const getOfertasByCategoriaUser = async (req, res) => {
 
 const actualizarOferta = async (req, res = response) => {
   const id = req.params.id;
-  const uid = req.body.usuario;
 
   try {
     const ofertaDB = await Oferta.findById(id);
@@ -355,10 +354,9 @@ const actualizarOferta = async (req, res = response) => {
 
     const cambioOferta = {
       ...req.body,
-      usuario: uid,
     };
 
-    console.log(`CAMBIO_OFERTA: ${cambioOferta.body}`)
+    console.log(`CAMBIO_OFERTA: ${cambioOferta.toISOString()}`)
 
     const ofertaActualizado = await Oferta.findByIdAndUpdate(id, cambioOferta, {
       new: true,
@@ -370,13 +368,13 @@ const actualizarOferta = async (req, res = response) => {
         })
       }
     });
-    
-    if (cambioOferta.interesados.aceptado === true) {
-      const idUsuarioContratado = cambioOferta.interesados.postulante;
+
+    if (ofertaActualizado.interesados.aceptado === true) {
+      const idUsuarioContratado = ofertaActualizado.interesados.postulante;
       console.log(`idUsuarioContratado: ${idUsuarioContratado}`)
       const usuarioContratado = await Usuario.findById(idUsuarioContratado);
       console.log(`usuarioContratado: ${usuarioContratado}`)
-      const usuarioQueContrata = await Usuario.findById(cambioOferta.usuario);
+      const usuarioQueContrata = await Usuario.findById(ofertaActualizado.usuario);
       if (usuarioContratado && usuarioQueContrata) {
         const emailUsuarioContratado = usuarioContratado.email;
         console.log(`emailUsuarioContratado: ${emailUsuarioContratado}`)
@@ -403,7 +401,7 @@ const actualizarOferta = async (req, res = response) => {
                     <h1 style="color: #fff; text-align:center">Notificación de contrato</h1>
                     <p style="color:#fff; text-align:center">
                       <span style:"color: #fff">Nos place comunicarte que has sido contratado en la oferta </span><br>
-                      <span style:"color: #fff">con titulo: ${cambioOferta.titulo} publicada por ${cambioOferta.nombreUsuario}</span><br><br>
+                      <span style:"color: #fff">con titulo: ${ofertaActualizado.titulo} publicada por ${ofertaActualizado.nombreUsuario}</span><br><br>
                       <span style:"color: #fff">te puedes contactar mediante el correo ${emailUsuarioQueContrata}</span><br><br>
                       <span style:"color: #fff"> o al numero de celular ${celularUsuarioQueContrata}</span><br><br>
                       <span style:"color: #fff"><b>No te olvides de ingresar a la plataforma y revisar la seccion de contratos</b></span><br>
