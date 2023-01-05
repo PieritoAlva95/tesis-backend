@@ -371,11 +371,15 @@ const actualizarOferta = async (req, res = response) => {
       } else {
         if (cambioOferta.interesados.aceptado === true) {
           const idUsuarioContratado = cambioOferta.interesados.postulante;
+          console.log(`idUsuarioContratado: ${idUsuarioContratado}`)
           const usuarioContratado = await Usuario.findById(idUsuarioContratado);
+          console.log(`usuarioContratado: ${usuarioContratado}`)
           const usuarioQueContrata = await Usuario.findById(cambioOferta.usuario);
           if (usuarioContratado && usuarioQueContrata) {
             const emailUsuarioContratado = usuarioContratado.email;
+            console.log(`emailUsuarioContratado: ${emailUsuarioContratado}`)
             const emailUsuarioQueContrata = usuarioQueContrata.email;
+            console.log(`emailUsuarioQueContrata: ${emailUsuarioQueContrata}`)
             const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
             const config = {
               host: 'smtp.gmail.com',
