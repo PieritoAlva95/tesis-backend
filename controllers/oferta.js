@@ -372,29 +372,29 @@ const actualizarOferta = async (req, res = response) => {
     const resultado = ofertaActualizado.interesados.filter(interesado => interesado.aceptado === true)
     console.log(`RESULTADO: ${resultado}`)
 
-
-    if (ofertaActualizado.interesados.aceptado === true) {
-      const idUsuarioContratado = ofertaActualizado.interesados.postulante;
-      const usuarioContratado = await Usuario.findById(idUsuarioContratado);
-      const usuarioQueContrata = await Usuario.findById(ofertaActualizado.usuario);
-      if (usuarioContratado && usuarioQueContrata) {
-        const emailUsuarioContratado = usuarioContratado.email;
-        const emailUsuarioQueContrata = usuarioQueContrata.email;
-        const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
-        const config = {
-          host: 'smtp.gmail.com',
-          port: 587,
-          auth: {
-            user: 'workjobstesis@gmail.com',
-            pass: 'mslvplvwdeyxtyvq'
-          }
+    const idUsuarioContratado = resultado.postulante;
+    console.log(`idUsuarioContratado: ${idUsuarioContratado}`)
+    const usuarioContratado = await Usuario.findById(idUsuarioContratado);
+    console.log(`usuarioContratado: ${usuarioContratado}`)
+    const usuarioQueContrata = await Usuario.findById(ofertaActualizado.usuario);
+    if (usuarioContratado && usuarioQueContrata) {
+      const emailUsuarioContratado = usuarioContratado.email;
+      const emailUsuarioQueContrata = usuarioQueContrata.email;
+      const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
+      const config = {
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+          user: 'workjobstesis@gmail.com',
+          pass: 'mslvplvwdeyxtyvq'
         }
+      }
 
-        let mailOptions = {
-          to: emailUsuarioContratado,
-          from: 'workjobstesis@gmail.com',
-          subject: 'Notificación de contrato Jobs - Trabajos 24/7',
-          html: `
+      let mailOptions = {
+        to: emailUsuarioContratado,
+        from: 'workjobstesis@gmail.com',
+        subject: 'Notificación de contrato Jobs - Trabajos 24/7',
+        html: `
               <table border="0" cellpadding="0" cellspacing="0" width="600px" background-color="#2d3436" bgcolor="#2d3436">
                 <tr height="200px">
                   <td bgcolor="" width="600"px>
@@ -411,19 +411,18 @@ const actualizarOferta = async (req, res = response) => {
                 </tr>            
               </table>
               `,
-        };
+      };
 
-        const transport = nodemailer.createTransport(config);
+      const transport = nodemailer.createTransport(config);
 
-        transport.sendMail(mailOptions, (err) => {
-          if (err) {
-            res.status(404).json({
-              ok: false,
-              msg: `Ha ocurrido un problema en el envio del correo. Error: ${err}`,
-            });
-          }
-        });
-      }
+      transport.sendMail(mailOptions, (err) => {
+        if (err) {
+          res.status(404).json({
+            ok: false,
+            msg: `Ha ocurrido un problema en el envio del correo. Error: ${err}`,
+          });
+        }
+      });
     }
 
     res.json({
