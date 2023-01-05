@@ -21,7 +21,7 @@ const actualizarOferta = async (req, res = response) => {
       usuario: uid,
     };
 
-    console.log(`CAMBIO_OFERTA: ${cambioOferta}`)
+    console.log(`CAMBIO_OFERTA: ${cambioOferta.body}`)
 
     if (cambioOferta.interesados.aceptado === true) {
       const idUsuarioContratado = cambioOferta.interesados.postulante;
@@ -67,11 +67,13 @@ const actualizarOferta = async (req, res = response) => {
 
         transport.sendMail(mailOptions, (err) => {
           if (err) {
+            console.log(`ERROR_MAIL: ${err}`)
             return res.status(404).json({
               ok: false,
               msg: `Ha ocurrido un problema en el envio del correo. Error: ${err}`,
             });
           }
+          console.log(`NO_HUBO_ERROR_MAIL`)
         });
       }
     }
