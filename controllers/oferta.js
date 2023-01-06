@@ -375,10 +375,59 @@ const actualizarOferta = async (req, res = response) => {
         interesado => interesado.aceptado === true
       )
       console.log(`RESULTADO: ${resultado} es de tipo : ${typeof (resultado)}`)
-      const objResultado = { ...resultado }
-      console.log(`OBJ_RESULTADO ${objResultado}`)
       resultado.forEach(
-        interesado => console.log(`POSTULANTE: ${interesado.postulante}`)
+        async interesado => {
+          const idUsuarioContratado = interesado.postulante;
+          const usuarioContratado = await Usuario.findById(idUsuarioContratado);
+          const usuarioQueContrata = await Usuario.findById(ofertaActualizado.usuario);
+          if (usuarioContratado && usuarioQueContrata) {
+            const emailUsuarioContratado = usuarioContratado.email;
+            const emailUsuarioQueContrata = usuarioQueContrata.email;
+            const celularUsuarioQueContrata = usuarioQueContrata.numeroDeCelular;
+            const config = {
+              host: 'smtp.gmail.com',
+              port: 587,
+              auth: {
+                user: 'workjobstesis@gmail.com',
+                pass: 'mslvplvwdeyxtyvq'
+              }
+            }
+
+            let mailOptions = {
+              to: emailUsuarioContratado,
+              from: 'workjobstesis@gmail.com',
+              subject: 'Notificación de contrato Jobs - Trabajos 24/7',
+              html: `
+                    <table border="0" cellpadding="0" cellspacing="0" width="600px" background-color="#2d3436" bgcolor="#2d3436">
+                      <tr height="200px">
+                        <td bgcolor="" width="600"px>
+                          <h1 style="color: #fff; text-align:center">Notificación de contrato</h1>
+                          <p style="color:#fff; text-align:center">
+                            <span style:"color: #fff">Nos place comunicarte que has sido contratado en la oferta </span><br>
+                            <span style:"color: #fff">con titulo: ${ofertaActualizado.titulo} publicada por ${ofertaActualizado.nombreUsuario}</span><br><br>
+                            <span style:"color: #fff">te puedes contactar mediante el correo ${emailUsuarioQueContrata}</span><br><br>
+                            <span style:"color: #fff"> o al numero de celular ${celularUsuarioQueContrata}</span><br><br>
+                            <span style:"color: #fff"><b>No te olvides de ingresar a la plataforma y revisar la seccion de contratos</b></span><br>
+                            <span style:"color: #fff"><b>Gracias por confiar en nosotros!</b></span><br>
+                          </p>
+                        </td>
+                      </tr>            
+                    </table>
+                    `,
+            };
+
+            const transport = nodemailer.createTransport(config);
+
+            transport.sendMail(mailOptions, (err) => {
+              if (err) {
+                res.status(404).json({
+                  ok: false,
+                  msg: `Ha ocurrido un problema en el envio del correo. Error: ${err}`,
+                });
+              }
+            });
+          }
+        }
       )
     }
 
