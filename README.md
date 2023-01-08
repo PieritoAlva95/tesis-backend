@@ -1,2 +1,2 @@
-# Review the API's
-https://backendtrabajos.herokuapp.com/api/usuarios/obtener/usuarios/
+# Link de la API
+https://backend-tesis-jobs.herokuapp.com
