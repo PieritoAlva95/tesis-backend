@@ -28,6 +28,7 @@ const fileUpload = (req, res = response) => {
 
   // Procesar la imagen
   const file = req.files.imagen;
+  console.log(`file: ${file}`)
 
   const nombreCortado = file.name.split('.');
   const extensionArchivo = nombreCortado[nombreCortado.length - 1];
@@ -43,6 +44,7 @@ const fileUpload = (req, res = response) => {
 
   // Generar el nombre del archivo
   const nombreArchivo = `${uuidv4()}.${extensionArchivo}`;
+  console.log(`nombreArchivo: ${nombreArchivo}`)
 
   // Path para guardar la imagen
   const path = `./uploads/${tipo}/${nombreArchivo}`;
