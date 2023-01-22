@@ -3,7 +3,6 @@ const fs = require('fs');
 
 const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
-const compress_images = require('compress-images');
 const { actualizarImagen } = require('../helpers/actualizar-imagen');
 
 const fileUpload = (req, res = response) => {
@@ -47,24 +46,6 @@ const fileUpload = (req, res = response) => {
 
   // Path para guardar la imagen
   const path = `./uploads/${tipo}/${nombreArchivo}`;
-  console.log(`PATH: ${path}`)
-
-  //Comprimir la imagen
-  const INPUT_PATH = "./uploads/usuarios"
-  const OUTPUT_PATH = "./compress/usuarios"
-  compress_images(INPUT_PATH, OUTPUT_PATH, { compress_force: false, statistic: true, autoupdate: true }, false,
-    { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
-    { png: { engine: "pngquant", command: ["--quality=20-50", "-o"] } },
-    { svg: { engine: "svgo", command: "--multipass" } },
-    { gif: { engine: "gifsicle", command: ["--colors", "64", "--use-col=web"] } },
-    function (error, completed, statistic) {
-      console.log("-------------");
-      console.log(error);
-      console.log(completed);
-      console.log(statistic);
-      console.log("-------------");
-    }
-  );
 
   // Mover la imagen
   file.mv(path, (err) => {
@@ -91,13 +72,13 @@ const retornaImagen = (req, res = response) => {
   const tipo = req.params.tipo;
   const foto = req.params.foto;
 
-  const pathImg = path.join(__dirname, `../compress/${tipo}/${foto}`);
+  const pathImg = path.join(__dirname, `../uploads/${tipo}/${foto}`);
 
   // imagen por defecto
   if (fs.existsSync(pathImg)) {
     res.sendFile(pathImg);
   } else {
-    const pathImg = path.join(__dirname, `../uploads/no-img.png`);
+    const pathImg = path.join(__dirname, `../uploads/no-img.jpg`);
     res.sendFile(pathImg);
   }
 };
