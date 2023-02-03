@@ -1,7 +1,7 @@
 const firebaseAdmin = require('firebase-admin');
 
 function initFirebase(){
-    const serviceAccount = require('../middlewares/trabajos24-5c0de-firebase-adminsdk-dh1el-42a7a4dd27.json');
+    const serviceAccount = require('../middlewares/tesis-employ-me-firebase-adminsdk-ji25o-11f586ded4.json');
     firebaseAdmin.initializeApp({
         credential: firebaseAdmin.credential.cert(serviceAccount)
     });
