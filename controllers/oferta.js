@@ -57,7 +57,7 @@ const crearOferta = async (req, res = response) => {
     const ofertaDB = await oferta.save();
     res.json({
       ok: true,
-      medico: ofertaDB,
+      oferta_creada: ofertaDB,
     });
   } catch (error) {
     console.log(error);
@@ -97,21 +97,20 @@ const verOfertaUnica = async (req, res = response) => {
 
 //ver todas las ofertas
 const verOfertas = async (req, res) => {
-  const desde = Number(req.query.desde) || 0;
-  const [ofertas, total] = await Promise.all([
+  const [ofertas] = await Promise.all([
     Oferta.find({
       disponible: 'sin contrato',
       status: true,
       statusUser: true
     }).sort({ fechaCreacion: -1 }),
-
-    Oferta.countDocuments(),
   ]);
+
+  const total = ofertas.length;
 
   res.json({
     ok: true,
-    ofertas,
-    total,
+    ofertas_disponibles: ofertas,
+    total
   });
 };
 

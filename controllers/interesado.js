@@ -84,10 +84,10 @@ const actualizarOferta = async (req, res = response) => {
       oferta: ofertaActualizado,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       ok: false,
-      msg: 'consulte  con el administrador',
+      msg: '/api/postulante/:id - Ha ocurrido un error, consulte con el administrador!',
+      error: error.toString()
     });
   }
 };
